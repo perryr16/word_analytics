@@ -16,13 +16,13 @@ def word_index(request):
   if request.method == 'GET':
     words = Word.objects.all()
     serializer = WordSerializer(words, many=True)
-    return Response(serializer.data)
   if request.method == 'POST':
     param = request.query_params['word']
     new_word = Word(word=param, length=len(param))
     new_word.save()
-    
-    # import pdb; pdb.set_trace()
+    words = Word.objects.all()
+    serializer = WordSerializer(words, many=True)
+  return Response(serializer.data)
     # request.method 
     # request.query_params['imput_param']
     # request.headers
