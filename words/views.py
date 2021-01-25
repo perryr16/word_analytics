@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
-from words.models import Word, Article, ArticleWord
+from words.models import Word, Article, ArticleWord, ArticleManager
 from words.serializers import WordSerializer
 import json 
 
@@ -33,8 +33,12 @@ def word_index(request):
 @api_view(['POST'])
 def article(request):
   title = request.query_params['title']
-  article  = Article(title=title)
-  words = Article.create_words(request.body)
+  article = Article.objects.create_article(title, request.body)
+  # article = Article(title=title)
+  # article.save
+  # word = Word(word='tuna', length=4)
+  # word.save()
+  import pdb; pdb.set_trace()
 
   return HttpResponse(json.dumps(words))
 

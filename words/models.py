@@ -8,11 +8,33 @@ class Word(models.Model):
   def __str__(self):
     return self.word
 
+class ArticleManager(models.Manager):
+  def create_article(self, title, body):
+    article = self.create(title=title)
+    import pdb; pdb.set_trace()
+    return article
+
+  def word_list(self, string):
+    body = str(string).lower()
+    # body = self.repalce_words(body)
+    punctuation = ['(', ')', '.', ',', ':', ',', '"', '[', ']', '/']
+    for element in punctuation:
+      body = body.replace(element, '')
+
+    small_words = [' a ', ' an ', ' and ', ' are ', ' as ', ' be ', ' by ', ' for ', ' i ', ' in ', ' is ', ' it ', ' of ', ' or ', ' to ', ' the ']
+    for small in small_words:
+      body = body.replace(small, ' ')
+
+    word_list = body.split(' ')
+    return word_list
+
+
 class Article(models.Model):
   url = models.TextField()
-  title = models.TextField()
+  title = models.TextField(unique=True)
   words = models.ManyToManyField(Word, through='ArticleWord')
 
+  objects = ArticleManager()
   def __str__(self):
     return self.url
   
@@ -47,7 +69,7 @@ class Article(models.Model):
       body = body.replace(small, ' ')
 
     word_list = body.split(' ')
-
+    import pdb; pdb.set_trace()
     for word in word_list:
       if Word.objects.filter(word=word):
         a_w = ArticleWord.objects.filter(word=word)
@@ -60,6 +82,7 @@ class Article(models.Model):
       word = Word(word=word, length=len(word))
       
       article_word = None
+
 
 
   # def replace_words(self, **kwargs):
