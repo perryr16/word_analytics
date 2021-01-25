@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response 
 from words.models import Word, Article, ArticleWord
 from words.serializers import WordSerializer
+import json 
 
 # Create your views here.
 def home(request):
@@ -32,7 +33,8 @@ def word_index(request):
 @api_view(['POST'])
 def word_dump(request):
   words = Article.sort_words(request.body)
-  return words
+
+  return HttpResponse(json.dumps(words))
 
 
 @api_view(['GET'])

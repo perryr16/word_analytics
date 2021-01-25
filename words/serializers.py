@@ -5,3 +5,4 @@ class WordSerializer(serializers.ModelSerializer):
   class Meta:
     model = Word 
     fields = ('id', 'word', 'length')
+
