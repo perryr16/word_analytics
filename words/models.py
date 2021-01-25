@@ -18,15 +18,34 @@ class ArticleManager(models.Manager):
         new_word.save()
       except: 
         pass
-      
-      try: 
-        a_w = ArticleWord.objects.filter(word=new_word).values()
-        count = a_w.count
+
+      # a_w = ArticleWord.objects.filter(word=new_word).values('count')
+      # if word == 'see':
+      #   import pdb; pdb.set_trace()
+
+      # ArticleWord.objects.values() = all values
+      # (Pdb) aw = ArticleWord.objects.get(pk=2434)
+      # (Pdb) aw.count
+      # 1
+      # (Pdb) aw.count += 1
+      # (Pdb) aw.count
+      # 2
+      # ArticleWord.objects.values()
+      #  breed = Word.objects.filter(word='breed').values('id')
+      # (Pdb) breed[0]
+      # {'id': 31537, 'word': 'breed', 'length': 5}
+
+        # Word.objects.filter(word='see').values()[0]['id']
+      try: # if AW exists, increment count
+        # aw = ArticleWord.objects.filter(word_id=new_word.id).values()[0]["count"]
+        aw = ArticleWord.objects.get_or_create(word_id=new_word.id, article_id=article.id)
+        # aw = ArticleWord.objects.filter(word_id=new_word.id).values()[0]
         import pdb; pdb.set_trace()
+        count = a_w.count
         count = a_w.count + 1
         article.words.add(new_word, through_defaults={'count':'1'})
         article.save()
-      except:
+      except: # if AW doesnt exist, create it
         article.words.add(new_word, through_defaults={'count':'1'})
         article.save()
 
