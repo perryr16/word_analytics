@@ -27,6 +27,10 @@ def word_index(request):
     # request.query_params['imput_param']
     # request.headers
 
+@api_view(['POST'])
+def word_dump(request):
+  Article.sort_words(request.body)
+
 
 @api_view(['GET'])
 def word_show(request, pk):

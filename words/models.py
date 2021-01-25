@@ -15,6 +15,12 @@ class Article(models.Model):
 
   def __str__(self):
     return self.url
+  
+  def sort_words(body):
+    body = str(body)
+    word_list = body.split(' ')
+    
+    import pdb; pdb.set_trace()
 
 class ArticleWord(models.Model):
   word = models.ForeignKey(Word, on_delete=models.CASCADE)
