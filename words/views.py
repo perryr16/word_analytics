@@ -31,8 +31,10 @@ def word_index(request):
     # request.headers
 
 @api_view(['POST'])
-def word_dump(request):
-  words = Article.sort_words(request.body)
+def article(request):
+  title = request.query_params['title']
+  article  = Article(title=title)
+  words = Article.create_words(request.body)
 
   return HttpResponse(json.dumps(words))
 
