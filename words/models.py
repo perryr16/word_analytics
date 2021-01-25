@@ -17,38 +17,18 @@ class ArticleManager(models.Manager):
         new_word = Word(word=word, length=len(word))
         new_word.save()
       except: 
+        new_word = Word.objects.get(word='see')
         pass
 
-      # a_w = ArticleWord.objects.filter(word=new_word).values('count')
-      # if word == 'see':
-      #   import pdb; pdb.set_trace()
+      aw = ArticleWord.objects.get_or_create(word_id=new_word.id, article_id=article.id)[0]
+      if aw.count is 0:
+        aw.count = 1
+        aw.save()
+      else: 
+        aw.count += 1 
+        aw.save()
 
-      # ArticleWord.objects.values() = all values
-      # (Pdb) aw = ArticleWord.objects.get(pk=2434)
-      # (Pdb) aw.count
-      # 1
-      # (Pdb) aw.count += 1
-      # (Pdb) aw.count
-      # 2
-      # ArticleWord.objects.values()
-      #  breed = Word.objects.filter(word='breed').values('id')
-      # (Pdb) breed[0]
-      # {'id': 31537, 'word': 'breed', 'length': 5}
-
-        # Word.objects.filter(word='see').values()[0]['id']
-      try: # if AW exists, increment count
-        # aw = ArticleWord.objects.filter(word_id=new_word.id).values()[0]["count"]
-        aw = ArticleWord.objects.get_or_create(word_id=new_word.id, article_id=article.id)
-        # aw = ArticleWord.objects.filter(word_id=new_word.id).values()[0]
-        import pdb; pdb.set_trace()
-        count = a_w.count
-        count = a_w.count + 1
-        article.words.add(new_word, through_defaults={'count':'1'})
-        article.save()
-      except: # if AW doesnt exist, create it
-        article.words.add(new_word, through_defaults={'count':'1'})
-        article.save()
-
+    article.save()
     import pdb; pdb.set_trace()
     return article
 
@@ -84,7 +64,7 @@ class Article(models.Model):
 class ArticleWord(models.Model):
   word = models.ForeignKey(Word, on_delete=models.CASCADE)
   article = models.ForeignKey(Article, on_delete=models.CASCADE)
-  count = models.IntegerField(blank=True, null=True)
+  count = models.IntegerField(default=0)
 
 
 
@@ -132,3 +112,26 @@ class ArticleWord(models.Model):
     #     word_dict[word] = word_dict.get(word, 0) + 1
     # word_sort = dict(sorted(word_dict.items(), key=lambda item: item[1], reverse = True))
     # return word_sort
+
+
+      # a_w = ArticleWord.objects.filter(word=new_word).values('count')
+      # if word == 'see':
+      #   import pdb; pdb.set_trace()
+
+      # ArticleWord.objects.values() = all values
+      # (Pdb) aw = ArticleWord.objects.get(pk=2434)
+      # (Pdb) aw.count
+      # 1
+      # (Pdb) aw.count += 1
+      # (Pdb) aw.count
+      # 2
+      # ArticleWord.objects.values()
+      #  breed = Word.objects.filter(word='breed').values('id')
+      # (Pdb) breed[0]
+      # {'id': 31537, 'word': 'breed', 'length': 5}
+
+          # aw = ArticleWord.objects.filter(word_id=new_word.id).values()[0]["count"]
+
+                  # count = a_w.count
+        # count = a_w.count + 1
+        # article.words.add(new_word, through_defaults={'count':'1'})
