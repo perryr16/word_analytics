@@ -34,7 +34,6 @@ class ArticleManager(models.Manager):
 
   def word_list(self, string):
     body = str(string).lower()
-    # body = self.repalce_words(body)
     punctuation = ['(', ')', '.', ',', ':', ',', '"', '[', ']', '/']
     for element in punctuation:
       body = body.replace(element, '')
