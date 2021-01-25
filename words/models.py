@@ -17,11 +17,15 @@ class Article(models.Model):
     return self.url
   
   def sort_words(body):
-    body = str(body)
+    body = str(body).lower()
+    body =  body.replace('(', '').replace(')', '')
     word_list = body.split(' ')
-    
-    import pdb; pdb.set_trace()
-
+    word_dict = {}
+    for word in word_list: 
+      if "\\" not in word:
+        word_dict[word] = word_dict.get(word, 0) + 1
+    word_sort = dict(sorted(word_dict.items(), key=lambda item: item[1], reverse = True))
+    return word_sort
 class ArticleWord(models.Model):
   word = models.ForeignKey(Word, on_delete=models.CASCADE)
   article = models.ForeignKey(Article, on_delete=models.CASCADE)

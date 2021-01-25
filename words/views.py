@@ -23,13 +23,16 @@ def word_index(request):
     words = Word.objects.all()
     serializer = WordSerializer(words, many=True)
   return Response(serializer.data)
+
+    # REQUEST METHODS
     # request.method 
-    # request.query_params['imput_param']
+    # request.query_params['input_param']
     # request.headers
 
 @api_view(['POST'])
 def word_dump(request):
-  Article.sort_words(request.body)
+  words = Article.sort_words(request.body)
+  return words
 
 
 @api_view(['GET'])
