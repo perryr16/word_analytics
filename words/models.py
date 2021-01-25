@@ -16,16 +16,19 @@ class ArticleManager(models.Manager):
       try: 
         new_word = Word(word=word, length=len(word))
         new_word.save()
-
       except: 
         pass
       
       try: 
-        a_w = ArticleWord.objects.filter(word=word)
+        a_w = ArticleWord.objects.filter(word=new_word).values()
+        count = a_w.count
+        import pdb; pdb.set_trace()
         count = a_w.count + 1
         article.words.add(new_word, through_defaults={'count':'1'})
         article.save()
-
+      except:
+        article.words.add(new_word, through_defaults={'count':'1'})
+        article.save()
 
     import pdb; pdb.set_trace()
     return article
