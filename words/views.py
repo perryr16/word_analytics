@@ -26,7 +26,7 @@ def word_index(request):
   return Response(serializer.data)
 
 
-@api_view(['POST', 'GET'])
+@api_view(['POST'])
 def article(request):
   if request.method=='POST':
     body = request.body 
