@@ -55,9 +55,13 @@ class ApiRoutesTest(TestCase):
 
 
   def test_get_article(self):
+    pigs = 'pig pig pig pig pig dog pig pig pig pig pig'
     req = c.post(reverse('article'), 
-                data={'title':self.title, 'body':self.body},
+                data={'title':self.title, 'body':pigs},
                 )
+    # req = c.post(reverse('article'), 
+    #             data={'title':self.title, 'body':self.body},
+    #             )
     self.assertEqual(1,1)
                 # headers={'Content-Type': 'application.json'},
                 # data=json.dumps(self.body)

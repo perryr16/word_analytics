@@ -13,54 +13,62 @@ class ArticleManager(models.Manager):
   def create_article(self, title, body):
     article = self.create(title=title)
     word_list = self.word_list(body)
+    import pdb; pdb.set_trace()
     for word in word_list: # abdc
-      try: 
-        new_word = Word.objects.get(word=word)
-      except: 
-        new_word = Word(word=word, length=len(word))
-        new_word.save()
+      word_obj = self.create_words(word, word_list)
+      self.create_content(word_obj, word, word_list, article)
 
-      try: # if it exists
-        new_content = ArticleWord.objects.get(word=new_word, article=article)
-        count = new_content.count + 1
-        new_content(count=count, content=word)
-        new_content.save()
-        #top
-      except: # if it doesnt
-        new_content = ArticleWord(word=new_word, article=article, count=1, content=word)
-        new_content.save()
-        #bottom
-
-      # if aw.count is 0:
-      #   aw.count = 1
-      #   aw.save()
-      # else: 
-      #   aw.count += 1 
-      #   aw.save()
     article.save()
     content_list = list(article.content.all())
-    ord_content = sorted(list(article.content.values('content', 'count')), key=lambda key: key['count'])
+    ord_content = sorted(list(article.content.values('content', 'count')), key=lambda key: key['count'], reverse=True)
     import pdb; pdb.set_trace()
     return article
 
+  def create_words(self, word, word_list):
+    try:
+      word_obj = Word.objects.get(word=word)
+    except: 
+      word_obj = Word(word=word, length=len(word))
+      word_obj.save()
+    return word_obj
+
+  def create_content(self, word_obj, word, word_list, article):
+    try:  # if it exists
+      content_obj = ArticleWord.objects.get(word=word_obj, article=article)
+      content_obj.count += 1
+      content_obj.save()
+    except: # if it doesnt
+      content_obj = ArticleWord(word=word_obj, article=article, count=1, content=word)
+      content_obj.save()
 
   def word_list(self, string):
     body = str(string).lower()
-    punctuation = ['(', ')', '.', ',', ':', ',', '"', '[', ']', '/']
-    for element in punctuation:
-      body = body.replace(element, '')
-
-    small_words = [' a ', ' an ', ' and ', ' are ', ' as ', ' be ', ' by ', ' for ', ' i ', ' in ', ' is ', ' it ', ' of ', ' or ', ' to ', ' the ']
-    for small in small_words:
-      body = body.replace(small, ' ')
-
+    body = self.remove_punctuation(body)
+    body = self.remove_small_words(body)
     word_list = body.split(' ')
-
-    for word in word_list: #1234
-      if '\\' in word:
-        word_list.remove(word)
+    word_list = self.remove_special_characters(word_list)
     return word_list
 
+  def remove_punctuation(self, body):
+    punctuation = ['(', ')', '.', ',', ':', ';', ',', '"', '[', ']', '/']
+    for element in punctuation:
+      body = body.replace(element, '')
+    return body
+
+  def remove_small_words(self, body):
+    small_words = [' a ', ' an ', ' and ', ' are ', ' as ', ' be ', ' by ', ' for ', 'form-data', ' i ', ' in ', ' is ', ' it ', ' of ', ' or ', ' to ', ' the ']
+    for small in small_words:
+      body = body.replace(small, ' ')
+    return body
+
+  def remove_special_characters(self, body):
+    for word in word_list:  # 1234
+      if '\\' in word:
+        word_list.remove(word)
+
+    while('' in word_list):
+      word_list.remove('')
+    return word_list[:1]
 
 class Article(models.Model):
   url = models.TextField()
@@ -125,7 +133,7 @@ class ArticleWord(models.Model):
     # return word_sort
 
 
-      # a_w = ArticleWord.objects.filter(word=new_word).values('count')
+      # a_w = ArticleWord.objects.filter(word=word_obj).values('count')
       # if word == 'see':
 
       # ArticleWord.objects.values() = all values
