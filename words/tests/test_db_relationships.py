@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Word, Article, ArticleWord, ArticleManager
+from ..models import Word, Article, ArticleWord, ArticleManager
 
 # Create your tests here.
 
@@ -33,4 +33,3 @@ class WordTestCase(TestCase):
     self.assertEqual(content, self.aw1)
 
 
-  
