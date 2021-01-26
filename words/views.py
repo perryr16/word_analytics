@@ -6,12 +6,6 @@ from words.models import Word, Article, ArticleWord, ArticleManager
 from words.serializers import WordSerializer, ArticleSerializer, ArticleWordSerializer
 import json 
 
-# Create your views here.
-def home(request):
-  tmpl_vars = {'from': PostForm()}
-  return render(request, 'words/index.html', tmpl_vars)
-# I DONT THINK THIS IS CORRECT 
-
 @api_view(['GET', 'POST'])
 def word_index(request):
   if request.method == 'GET':
