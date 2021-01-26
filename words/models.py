@@ -39,7 +39,7 @@ class ArticleManager(models.Manager):
       #   aw.save()
     article.save()
     content_list = list(article.content.all())
-    # ord_content = sorted(list(article.content.all()), key=lambda key: key['count'])
+    ord_content = sorted(list(article.content.values('content', 'count')), key=lambda key: key['count'])
     import pdb; pdb.set_trace()
     return article
 
