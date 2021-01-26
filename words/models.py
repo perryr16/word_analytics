@@ -20,7 +20,17 @@ class ArticleManager(models.Manager):
         new_word = Word(word=word, length=len(word))
         new_word.save()
 
-      # aw = ArticleWord.objects.get_or_create(word=new_word, article=article)[0]
+      try: # if it exists
+        new_content = ArticleWord.objects.get(word=new_word, article=article)
+        count = new_content.count + 1
+        new_content(count=count, content=word)
+        new_content.save()
+        #top
+      except: # if it doesnt
+        new_content = ArticleWord(word=new_word, article=article, count=1, content=word)
+        new_content.save()
+        #bottom
+
       # if aw.count is 0:
       #   aw.count = 1
       #   aw.save()
@@ -28,6 +38,8 @@ class ArticleManager(models.Manager):
       #   aw.count += 1 
       #   aw.save()
     article.save()
+    content_list = list(article.content.all())
+    # ord_content = sorted(list(article.content.all()), key=lambda key: key['count'])
     import pdb; pdb.set_trace()
     return article
 
@@ -64,6 +76,7 @@ class ArticleWord(models.Model):
   word = models.ForeignKey(Word, related_name='content', on_delete=models.CASCADE)
   article = models.ForeignKey(Article, related_name='content', on_delete=models.CASCADE)
   count = models.IntegerField(default=0)
+  content = models.TextField(default=None)
 
 
 
