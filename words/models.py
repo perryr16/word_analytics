@@ -13,16 +13,13 @@ class ArticleManager(models.Manager):
   def create_article(self, title, body):
     article = self.create(title=title)
     word_list = self.word_list(body)
-    import pdb; pdb.set_trace()
-    for word in word_list: # abdc
+    for word in word_list:
       word_obj = self.create_words(word, word_list)
       self.create_content(word_obj, word, word_list, article)
-
     article.save()
-    content_list = list(article.content.all())
-    ord_content = sorted(list(article.content.values('content', 'count')), key=lambda key: key['count'], reverse=True)
-    import pdb; pdb.set_trace()
     return article
+    # content_list = list(article.content.all())
+    # ord_content = sorted(list(article.content.values('content', 'count')), key=lambda key: key['count'], reverse=True)
 
   def create_words(self, word, word_list):
     try:
@@ -61,14 +58,13 @@ class ArticleManager(models.Manager):
       body = body.replace(small, ' ')
     return body
 
-  def remove_special_characters(self, body):
+  def remove_special_characters(self, word_list):
     for word in word_list:  # 1234
       if '\\' in word:
         word_list.remove(word)
-
     while('' in word_list):
       word_list.remove('')
-    return word_list[:1]
+    return word_list[1:]
 
 class Article(models.Model):
   url = models.TextField()

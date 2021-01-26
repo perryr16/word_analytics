@@ -59,6 +59,7 @@ class ApiRoutesTest(TestCase):
     req = c.post(reverse('article'), 
                 data={'title':self.title, 'body':pigs},
                 )
+    import pdb; pdb.set_trace()
     # req = c.post(reverse('article'), 
     #             data={'title':self.title, 'body':self.body},
     #             )
