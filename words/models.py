@@ -13,25 +13,24 @@ class ArticleManager(models.Manager):
   def create_article(self, title, body):
     article = self.create(title=title)
     word_list = self.word_list(body)
-    for word in word_list:
+    for word in word_list: # abdc
       try: 
+        new_word = Word.objects.get(word=word)
+      except: 
         new_word = Word(word=word, length=len(word))
         new_word.save()
-      except: 
-        new_word = Word.objects.get(word='see')
-        pass
 
-      aw = ArticleWord.objects.get_or_create(word_id=new_word.id, article_id=article.id)[0]
-      if aw.count is 0:
-        aw.count = 1
-        aw.save()
-      else: 
-        aw.count += 1 
-        aw.save()
-
+      # aw = ArticleWord.objects.get_or_create(word=new_word, article=article)[0]
+      # if aw.count is 0:
+      #   aw.count = 1
+      #   aw.save()
+      # else: 
+      #   aw.count += 1 
+      #   aw.save()
     article.save()
     import pdb; pdb.set_trace()
     return article
+
 
   def word_list(self, string):
     body = str(string).lower()
@@ -45,7 +44,7 @@ class ArticleManager(models.Manager):
 
     word_list = body.split(' ')
 
-    for word in word_list:
+    for word in word_list: #1234
       if '\\' in word:
         word_list.remove(word)
     return word_list
@@ -79,7 +78,6 @@ class ArticleWord(models.Model):
   #     body = body.replace(small, ' ')
 
   #   word_list = body.split(' ')
-  #   import pdb; pdb.set_trace()
   #   for word in word_list:
   #     if Word.objects.filter(word=word):
   #       a_w = ArticleWord.objects.filter(word=word)
@@ -116,7 +114,6 @@ class ArticleWord(models.Model):
 
       # a_w = ArticleWord.objects.filter(word=new_word).values('count')
       # if word == 'see':
-      #   import pdb; pdb.set_trace()
 
       # ArticleWord.objects.values() = all values
       # (Pdb) aw = ArticleWord.objects.get(pk=2434)

@@ -28,7 +28,11 @@ def word_index(request):
 
 @api_view(['POST', 'GET'])
 def article(request):
-  import pdb; pdb.set_trace()
+  if request.method=='POST':
+    body = request.body 
+    title = request.data['title']
+    Article.objects.create_article(title, body)
+
   words = Word.objects.all()
   serializer = WordSerializer(words, many=True)
   return Response(serializer.data)
