@@ -5,6 +5,7 @@ class Word(models.Model):
   word = models.CharField(max_length=99, unique=True)
   length = models.IntegerField()
 
+
   def __str__(self):
     return self.word
 
@@ -61,8 +62,8 @@ class Article(models.Model):
   
 
 class ArticleWord(models.Model):
-  word = models.ForeignKey(Word, on_delete=models.CASCADE)
-  article = models.ForeignKey(Article, on_delete=models.CASCADE)
+  word = models.ForeignKey(Word, related_name='content', on_delete=models.CASCADE)
+  article = models.ForeignKey(Article, related_name='content', on_delete=models.CASCADE)
   count = models.IntegerField(default=0)
 
 
