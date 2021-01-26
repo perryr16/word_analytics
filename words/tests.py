@@ -17,11 +17,11 @@ class WordTestCase(TestCase):
     self.assertEqual(1, 1)
 
   def test_words_in_article(self):
-    import pdb; pdb.set_trace()
-    self.assertEqual(self.word1.article.all(), self.pig)
+    self.assertEqual(self.word1.article_set.all(), self.pig)
   
   def test_article_has_words(self):
     words = list(self.pig.words.all())
     self.assertEqual(words, [self.word1, self.word2])
+
+
   
-    import pdb; pdb.set_trace()
