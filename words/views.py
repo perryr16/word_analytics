@@ -33,14 +33,15 @@ def word_index(request):
 @api_view(['POST'])
 def article(request):
   title = request.query_params['title']
-  article = Article.objects.create_article(title, request.body)
-  # article = Article(title=title)
-  # article.save
-  # word = Word(word='tuna', length=4)
-  # word.save()
-  import pdb; pdb.set_trace()
+  # article = Article.objects.create_article(title, request.body)
+  # # article = Article(title=title)
+  # # article.save
+  # # word = Word(word='tuna', length=4)
+  # # word.save()
+  # import pdb; pdb.set_trace()
 
-  return HttpResponse(json.dumps(words))
+  return HttpResponse(json.dumps({"words":"word"}))
+  # return HttpResponse(json.dumps(words))
 
 
 @api_view(['GET'])

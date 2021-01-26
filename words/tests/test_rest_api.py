@@ -3,7 +3,7 @@ from django.test import TestCase, Client
 from ..models import Word, Article, ArticleWord, ArticleManager
 
 
-client = Client()
+c = Client()
 
 class ApiRoutesTest(TestCase):
   def setUp(self):
@@ -16,15 +16,23 @@ class ApiRoutesTest(TestCase):
 
 
   def test_get_word_index(self):
-    res = client.get('/words/')
+    res = c.get('/words/')
     self.assertEqual(res.data[0]["word"], self.word1.word)
     self.assertEqual(res.data[1]["word"], self.word2.word)
     self.assertEqual(res.data[2]["word"], self.word3.word)
+
+  def test_get_word_by_id(self):
+    res = c.get(f'/words/{self.word2.id}')
+    self.assertEqual(res.data["word"], self.word2.word)
 
   def test_post_word(self):
     original_set = Word.objects.filter(word='chicken')
     self.assertEqual(len(original_set), 0)
 
-    req = client.post('/words/?word=chicken')
+    req = c.post('/words/?word=chicken')
     new_set = Word.objects.filter(word='chicken')
     self.assertEqual(len(new_set), 1)
+  
+  # def test_build_artile(self):
+  #   req = c.post('/words/article/')
+  #   import pdb; pdb.set_trace()
