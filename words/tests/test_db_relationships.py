@@ -10,8 +10,8 @@ class WordTestCase(TestCase):
     self.word2 = Word.objects.create(word='word22', length=6)
     self.word3 = Word.objects.create(word='word333', length=7)
 
-    self.aw1 = ArticleWord.objects.create(word=self.word1, article=self.article1, count=10)
-    self.aw2 = ArticleWord.objects.create(word=self.word2, article=self.article1, count=3)
+    self.aw1 = ArticleWord.objects.create(word=self.word1, article=self.article1, count=10, content=self.word1.word)
+    self.aw2 = ArticleWord.objects.create(word=self.word2, article=self.article1, count=3, content=self.word2.word)
 
   def test_auto_pass(self):
     self.assertEqual(1, 1)

@@ -32,7 +32,7 @@ def article(request):
     body = request.body 
     title = request.data['title']
     res = Article.objects.create_article(title, body)
-  return Response(json.dumps(res))
+  return Response(res)
   # title = request.query_params['title']
   # article = Article.objects.create_article(title, request.body)
   # # article = Article(title=title)
