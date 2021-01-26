@@ -5,6 +5,7 @@ class Word(models.Model):
   word = models.CharField(max_length=99, unique=True)
   length = models.IntegerField()
 
+
   def __str__(self):
     return self.word
 
@@ -13,42 +14,61 @@ class ArticleManager(models.Manager):
     article = self.create(title=title)
     word_list = self.word_list(body)
     for word in word_list:
-      try: 
-        new_word = Word(word=word, length=len(word))
-        new_word.save()
-      except: 
-        new_word = Word.objects.get(word='see')
-        pass
-
-      aw = ArticleWord.objects.get_or_create(word_id=new_word.id, article_id=article.id)[0]
-      if aw.count is 0:
-        aw.count = 1
-        aw.save()
-      else: 
-        aw.count += 1 
-        aw.save()
-
+      word_obj = self.create_words(word, word_list)
+      self.create_content(word_obj, word, word_list, article)
     article.save()
-    import pdb; pdb.set_trace()
-    return article
+    res = self.article_n_content(article)
+    return res
+    
+  def article_n_content(self, article):
+    ord_content = sorted(list(article.content.values('content', 'count')), key=lambda key: key['count'], reverse=True)
+    res = {'Article Title': article.title, 'Content': ord_content}
+    return res
+
+  def create_words(self, word, word_list):
+    try:
+      word_obj = Word.objects.get(word=word)
+    except: 
+      word_obj = Word(word=word, length=len(word))
+      word_obj.save()
+    return word_obj
+
+  def create_content(self, word_obj, word, word_list, article):
+    try:  # if it exists
+      content_obj = ArticleWord.objects.get(word=word_obj, article=article)
+      content_obj.count += 1
+      content_obj.save()
+    except: # if it doesnt
+      content_obj = ArticleWord(word=word_obj, article=article, count=1, content=word)
+      content_obj.save()
 
   def word_list(self, string):
     body = str(string).lower()
-    punctuation = ['(', ')', '.', ',', ':', ',', '"', '[', ']', '/']
-    for element in punctuation:
-      body = body.replace(element, '')
-
-    small_words = [' a ', ' an ', ' and ', ' are ', ' as ', ' be ', ' by ', ' for ', ' i ', ' in ', ' is ', ' it ', ' of ', ' or ', ' to ', ' the ']
-    for small in small_words:
-      body = body.replace(small, ' ')
-
+    body = self.remove_punctuation(body)
+    body = self.remove_small_words(body)
     word_list = body.split(' ')
-
-    for word in word_list:
-      if '\\' in word:
-        word_list.remove(word)
+    word_list = self.remove_special_characters(word_list)
     return word_list
 
+  def remove_punctuation(self, body):
+    punctuation = ['(', ')', '.', ',', ':', ';', ',', '"', '[', ']', '/']
+    for element in punctuation:
+      body = body.replace(element, '')
+    return body
+
+  def remove_small_words(self, body):
+    small_words = [' a ', ' an ', ' and ', ' are ', ' as ', ' be ', ' by ', ' for ', 'form-data', ' i ', ' in ', ' is ', ' it ', ' of ', ' or ', ' to ', ' the ']
+    for small in small_words:
+      body = body.replace(small, ' ')
+    return body
+
+  def remove_special_characters(self, word_list):
+    for word in word_list:  # 1234
+      if '\\' in word:
+        word_list.remove(word)
+    while('' in word_list):
+      word_list.remove('')
+    return word_list[1:]
 
 class Article(models.Model):
   url = models.TextField()
@@ -61,9 +81,10 @@ class Article(models.Model):
   
 
 class ArticleWord(models.Model):
-  word = models.ForeignKey(Word, on_delete=models.CASCADE)
-  article = models.ForeignKey(Article, on_delete=models.CASCADE)
+  word = models.ForeignKey(Word, related_name='content', on_delete=models.CASCADE)
+  article = models.ForeignKey(Article, related_name='content', on_delete=models.CASCADE)
   count = models.IntegerField(default=0)
+  content = models.TextField(default=None)
 
 
 
@@ -78,7 +99,6 @@ class ArticleWord(models.Model):
   #     body = body.replace(small, ' ')
 
   #   word_list = body.split(' ')
-  #   import pdb; pdb.set_trace()
   #   for word in word_list:
   #     if Word.objects.filter(word=word):
   #       a_w = ArticleWord.objects.filter(word=word)
@@ -113,9 +133,8 @@ class ArticleWord(models.Model):
     # return word_sort
 
 
-      # a_w = ArticleWord.objects.filter(word=new_word).values('count')
+      # a_w = ArticleWord.objects.filter(word=word_obj).values('count')
       # if word == 'see':
-      #   import pdb; pdb.set_trace()
 
       # ArticleWord.objects.values() = all values
       # (Pdb) aw = ArticleWord.objects.get(pk=2434)
