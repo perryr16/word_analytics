@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
 from words.models import Word, Article, ArticleWord, ArticleManager
-from words.serializers import WordSerializer
+from words.serializers import WordSerializer, ArticleSerializer
 import json 
 
 # Create your views here.
@@ -25,22 +25,20 @@ def word_index(request):
     serializer = WordSerializer(words, many=True)
   return Response(serializer.data)
 
-    # REQUEST METHODS
-    # request.method 
-    # request.query_params['input_param']
-    # request.headers
 
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 def article(request):
-  import pdb; pdb.set_trace()
-  title = request.query_params['title']
+  words = Word.objects.all()
+  serializer = WordSerializer(words, many=True)
+  return Response(serializer.data)
+  # title = request.query_params['title']
   # article = Article.objects.create_article(title, request.body)
   # # article = Article(title=title)
   # # article.save
   # # word = Word(word='tuna', length=4)
   # # word.save()
   # import pdb; pdb.set_trace()
-  return Response(json.dumps({"word":"word"}))
+  # return Response(json.dumps({"word":"word"}))
   # return HttpResponse(json.dumps({"words":"word"}))
   # return HttpResponse(json.dumps(words))
 
@@ -56,3 +54,15 @@ def word_show(request, pk):
     serializer = WordSerializer(word)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def article_index(request):
+  import pdb; pdb.set_trace()
+  articles = Article.objects.all()
+  serializer = ArticleSerializer(articles, many=True)
+  return Response(serializer.data)
+
+
+# REQUEST METHODS
+# request.method
+# request.query_params['input_param']
+# request.headers

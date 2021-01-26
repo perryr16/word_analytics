@@ -6,3 +6,8 @@ class WordSerializer(serializers.ModelSerializer):
     model = Word 
     fields = ('id', 'word', 'length')
 
+class ArticleSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Article 
+    fields = ('id', 'title', 'url')
+

@@ -1,6 +1,7 @@
 import json 
 from django.test import TestCase, Client
 from ..models import Word, Article, ArticleWord, ArticleManager
+from django.urls import reverse
 
 
 c = Client()
@@ -13,6 +14,22 @@ class ApiRoutesTest(TestCase):
     self.word1 = Word.objects.create(word='word1', length=5)
     self.word2 = Word.objects.create(word='word22', length=6)
     self.word3 = Word.objects.create(word='word333', length=7)
+  
+  # def test_post_article(self):
+  #   url = reverse()
+  #   req = self.c.post(article)
+  #   self.assertEqual(1,1)
+
+  def test_urls(self):
+    # response = self.client.get('/words/')
+    # self.assertEqual(response.status_code, 200)
+    # response = self.client.get(f'/words/{self.word2.id}')
+    # self.assertEqual(response.status_code, 200)
+    # response = self.client.post('/words/?word=dog')
+    # self.assertEqual(response.status_code, 200)
+    response = self.client.get('/words/art/fart/')
+    self.assertEqual(response.status_code, 200)
+
 
 
   def test_get_word_index(self):
@@ -41,12 +58,14 @@ class ApiRoutesTest(TestCase):
   #   new_set = Word.objects.filter(word='chicken')
   #   self.assertEqual(len(new_set), 1)
 
-  # def test_post_article(self):
-  #   req = c.post('/words/article/?title=article_title', 
-  #               # headers={'Content-Type': 'application.json'},
-  #               # data=json.dumps(self.body)
-  #               )
-  #   import pdb; pdb.set_trace()
+
+
+  def test_get_article(self):
+    req = c.get('/words/article')
+    self.assertEqual(1,1)
+                # headers={'Content-Type': 'application.json'},
+                # data=json.dumps(self.body)
+                
     #THIS IS WHERE I AM
   
   # def test_build_artile(self):
