@@ -60,6 +60,9 @@ class ApiRoutesTest(TestCase):
                 data={'title':self.title, 'body':pigs},
                 )
     import pdb; pdb.set_trace()
+    self.assertEqual(req.data["Article Title"], "Guinea Pig")
+    expected = [{"content": "pig", "count": 8}, {"content": "dog", "count": 1}]
+    self.assertEqual(req.data["Content"], expected)
     # req = c.post(reverse('article'), 
     #             data={'title':self.title, 'body':self.body},
     #             )

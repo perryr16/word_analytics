@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
 from words.models import Word, Article, ArticleWord, ArticleManager
-from words.serializers import WordSerializer, ArticleSerializer
+from words.serializers import WordSerializer, ArticleSerializer, ArticleWordSerializer
 import json 
 
 # Create your views here.
@@ -31,11 +31,8 @@ def article(request):
   if request.method=='POST':
     body = request.body 
     title = request.data['title']
-    Article.objects.create_article(title, body)
-
-  words = Word.objects.all()
-  serializer = WordSerializer(words, many=True)
-  return Response(serializer.data)
+    res = Article.objects.create_article(title, body)
+  return Response(json.dumps(res))
   # title = request.query_params['title']
   # article = Article.objects.create_article(title, request.body)
   # # article = Article(title=title)

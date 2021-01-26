@@ -17,9 +17,13 @@ class ArticleManager(models.Manager):
       word_obj = self.create_words(word, word_list)
       self.create_content(word_obj, word, word_list, article)
     article.save()
-    return article
-    # content_list = list(article.content.all())
-    # ord_content = sorted(list(article.content.values('content', 'count')), key=lambda key: key['count'], reverse=True)
+    res = self.article_n_content(article)
+    return res
+    
+  def article_n_content(self, article):
+    ord_content = sorted(list(article.content.values('content', 'count')), key=lambda key: key['count'], reverse=True)
+    res = {'Article Title': article.title, 'Content': ord_content}
+    return res
 
   def create_words(self, word, word_list):
     try:
