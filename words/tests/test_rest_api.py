@@ -14,21 +14,21 @@ class ApiRoutesTest(TestCase):
     self.word1 = Word.objects.create(word='word1', length=5)
     self.word2 = Word.objects.create(word='word22', length=6)
     self.word3 = Word.objects.create(word='word333', length=7)
-  
-  # def test_post_article(self):
-  #   url = reverse()
-  #   req = self.c.post(article)
-  #   self.assertEqual(1,1)
 
   def test_urls(self):
-    # response = self.client.get('/words/')
-    # self.assertEqual(response.status_code, 200)
-    # response = self.client.get(f'/words/{self.word2.id}')
-    # self.assertEqual(response.status_code, 200)
-    # response = self.client.post('/words/?word=dog')
-    # self.assertEqual(response.status_code, 200)
-    response = self.client.get('/words/art/fart/')
+    response = self.client.get('/words/')
     self.assertEqual(response.status_code, 200)
+    response = self.client.get(f'/words/{self.word2.id}')
+    self.assertEqual(response.status_code, 200)
+    response = self.client.post('/words/?word=dog')
+    self.assertEqual(response.status_code, 200)
+    response = self.client.get(reverse('article_index'))
+    self.assertEqual(response.status_code, 200)
+    # response = self.client.get(reverse('article'))
+    # self.assertEqual(response.status_code, 200)
+    # response = self.client.post(reverse('article'))
+    # self.assertEqual(response.status_code, 200)
+
 
 
 
@@ -50,18 +50,12 @@ class ApiRoutesTest(TestCase):
     new_set = Word.objects.filter(word='chicken')
     self.assertEqual(len(new_set), 1)
 
-  # def test_post_word2(self):
-  #   original_set = Word.objects.filter(word='chicken')
-  #   self.assertEqual(len(original_set), 0)
 
-  #   req = c.post('/words/?word=chicken')
-  #   new_set = Word.objects.filter(word='chicken')
-  #   self.assertEqual(len(new_set), 1)
 
 
 
   def test_get_article(self):
-    req = c.get('/words/article')
+    req = c.post(reverse('article'), headers={'Content-Type':'application/json'})
     self.assertEqual(1,1)
                 # headers={'Content-Type': 'application.json'},
                 # data=json.dumps(self.body)
