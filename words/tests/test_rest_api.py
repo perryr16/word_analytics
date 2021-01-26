@@ -69,8 +69,3 @@ class ApiRoutesTest(TestCase):
     #             headers={'Content-Type': 'application.json'},
     #             data=json.dumps(self.body)
                 
-    #THIS IS WHERE I AM
-  
-  # def test_build_artile(self):
-  #   req = c.post('/words/article/')
-  #   import pdb; pdb.set_trace()
