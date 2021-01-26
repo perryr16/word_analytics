@@ -17,6 +17,14 @@ class ApiRoutesTest(TestCase):
 
   def test_get_word_index(self):
     res = client.get('/words/')
-    self.assertEqual(res)
+    self.assertEqual(res.data[0]["word"], self.word1.word)
+    self.assertEqual(res.data[1]["word"], self.word2.word)
+    self.assertEqual(res.data[2]["word"], self.word3.word)
 
-    import pdb; pdb.set_trace()
+  def test_post_word(self):
+    original_set = Word.objects.filter(word='chicken')
+    self.assertEqual(len(original_set), 0)
+
+    req = client.post('/words/?word=chicken')
+    new_set = Word.objects.filter(word='chicken')
+    self.assertEqual(len(new_set), 1)
