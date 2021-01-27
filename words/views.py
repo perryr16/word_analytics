@@ -6,6 +6,7 @@ from words.models import Word, Article, ArticleWord, ArticleManager
 from words.serializers import WordSerializer, ArticleSerializer, ArticleWordSerializer
 import json 
 
+
 @api_view(['GET', 'POST'])
 def word_index(request):
   if request.method == 'GET':
@@ -23,10 +24,22 @@ def word_index(request):
 @api_view(['POST'])
 def article(request):
   if request.method=='POST':
-    body = request.body 
+    body = request.data['body']
     title = request.data['title']
     res = Article.objects.create_article(title, body)
   return Response(res)
+
+@api_view(['GET'])
+def article_get(request, pk):
+  try:
+    article = Article.objects.get(pk=pk)
+  except Article.DoesNotExist:
+    return HttpResponse(status=404)
+  if request.method == 'GET':
+    serializer = ArticleSerializer(article)
+    # return Response(article.objects.values())
+    return Response(Article.objects.article_n_content(article))
+
   # title = request.query_params['title']
   # article = Article.objects.create_article(title, request.body)
   # # article = Article(title=title)
@@ -61,3 +74,11 @@ def article_index(request):
 # request.method
 # request.query_params['input_param']
 # request.headers
+
+def article_show(request, pk=1):
+  dog = {
+    'name':'spot',
+    'voice':'bark'
+  }
+  context = {'cat':dog}
+  return render(request, 'words/show.html', context)

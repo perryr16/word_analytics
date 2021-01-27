@@ -9,6 +9,7 @@ class WordSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
   class Meta:
     model = Article 
+    depth = 1
     fields = ('id', 'title', 'url')
 class ArticleWordSerializer(serializers.ModelSerializer):
   class Meta:

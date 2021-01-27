@@ -27,6 +27,7 @@ class ArticleManager(models.Manager):
       ord_dict[kv['content']] = kv['count']
     res = {'Article Title': article.title, 'Content': ord_dict}
     return res
+    
 
   def create_words(self, word, word_list):
     try:
@@ -72,6 +73,11 @@ class ArticleManager(models.Manager):
     while('' in word_list):
       word_list.remove('')
     return word_list[1:]
+
+  def serialize_article(self, article):
+    res = {}
+    res['title'] = article.title
+    res['content'] = article.content
 
 class Article(models.Model):
   url = models.TextField()
