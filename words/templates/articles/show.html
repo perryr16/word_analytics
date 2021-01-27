@@ -1,7 +1,5 @@
-
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'words/style.css' %}">
-
+{% extends "base.html" %}
+{% block page_content %}
 <div class="content">
 
   <p>{{title}}</p>
@@ -13,5 +11,5 @@
   
 </div>
 
-
+{% endblock %}
 
