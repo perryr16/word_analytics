@@ -22,7 +22,10 @@ class ArticleManager(models.Manager):
     
   def article_n_content(self, article):
     ord_content = sorted(list(article.content.values('content', 'count')), key=lambda key: key['count'], reverse=True)
-    res = {'Article Title': article.title, 'Content': ord_content}
+    ord_dict = {}
+    for kv in ord_content:
+      ord_dict[kv['content']] = kv['count']
+    res = {'Article Title': article.title, 'Content': ord_dict}
     return res
 
   def create_words(self, word, word_list):
