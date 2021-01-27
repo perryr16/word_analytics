@@ -22,8 +22,11 @@ class ArticleManager(models.Manager):
     
   def article_n_content(self, article):
     ord_content = sorted(list(article.content.values('content', 'count')), key=lambda key: key['count'], reverse=True)
+    # ord_dict = []
     ord_dict = {}
     for kv in ord_content:
+      # x = {kv['content'] : kv['count']}
+      # ord_dict.append(x)
       ord_dict[kv['content']] = kv['count']
     res = {'Title': article.title, 'Content': ord_dict}
     return res

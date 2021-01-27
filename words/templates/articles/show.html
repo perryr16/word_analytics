@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block page_content %}
 <p>test!</p>
-<p>{{format.Title}}</p>
-<ol>
-  {% for %}
-  <li></li>
-</ol>
-<p>{{list(article_key.content.values)}}</p>
+<p>{{title}}</p>
+<ul>
+  {% for c in content%}
+  <li>{{c}} - {{content.c}}</li>
+  <li>{{content.c}}</li>
+  {% endfor %}
+</ul>
 
 
 
