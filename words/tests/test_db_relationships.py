@@ -5,7 +5,7 @@ from ..models import Word, Article, ArticleWord, ArticleManager
 
 class WordTestCase(TestCase):
   def setUp(self):
-    self.article1 = Article.objects.create(url='www.example.com', title='article title')
+    self.article1 = Article.objects.create(url='www.example.com', title='title')
     self.word1 = Word.objects.create(word='word1', length=5)
     self.word2 = Word.objects.create(word='word22', length=6)
     self.word3 = Word.objects.create(word='word333', length=7)

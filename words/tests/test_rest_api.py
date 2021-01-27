@@ -59,7 +59,7 @@ class ApiRoutesTest(TestCase):
     req = c.post(reverse('article'), 
                 data={'title':'Pigs and Dog', 'body':pigs},
                 )
-    self.assertEqual(req.data["Article Title"], "Pigs and Dog")
+    self.assertEqual(req.data["Title"], "Pigs and Dog")
     expected = {"pig": 8, "dog": 1}
     self.assertEqual(req.data["Content"], expected)
     req = c.post(reverse('article'), 

@@ -78,5 +78,6 @@ def article_index(request):
 def article_show(request, pk):
   article = Article.objects.get(pk=pk)
   res = Article.objects.article_n_content(article)
-  context = res
+  context = {'format': res,
+              'article_key': article}
   return render(request, 'articles/show.html', context)
