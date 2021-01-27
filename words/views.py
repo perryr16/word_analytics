@@ -75,10 +75,8 @@ def article_index(request):
 # request.query_params['input_param']
 # request.headers
 
-def article_show(request, pk=1):
-  dog = {
-    'name':'spot',
-    'voice':'bark'
-  }
-  context = {'cat':dog}
-  return render(request, 'words/show.html', context)
+def article_show(request, pk):
+  article = Article.objects.get(pk=pk)
+  res = Article.objects.article_n_content(article)
+  context = res
+  return render(request, 'articles/show.html', context)
