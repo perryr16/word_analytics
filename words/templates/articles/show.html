@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% block page_content %}
-<p>test!</p>
 <p>{{title}}</p>
 <ul>
-  {% for c in content%}
-  <li>{{c}} - {{content.c}}</li>
-  <li>{{content.c}}</li>
+  {% for k, v in content.items %}
+  <li>{{k}} - {{v}}</li>
   {% endfor %}
 </ul>
 
