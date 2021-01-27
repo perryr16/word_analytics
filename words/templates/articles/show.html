@@ -1,13 +1,17 @@
-{% extends "base.html" %}
-{% block page_content %}
-<p>{{title}}</p>
-<ul>
-  {% for k, v in content.items %}
-  <li>{{k}} - {{v}}</li>
-  {% endfor %}
-</ul>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'words/style.css' %}">
+
+<div class="content">
+
+  <p>{{title}}</p>
+  <ul>
+    {% for k, v in content.items %}
+    <li>{{k}} - {{v}}</li>
+    {% endfor %}
+  </ul>
+  
+</div>
 
 
 
-
-{% endblock %}
