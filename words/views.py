@@ -101,3 +101,5 @@ def delete_article(request, pk):
   Article.objects.get(pk=pk).delete()
   return redirect('article_all')
 
+def article_new(request):
+  return render(request, 'article/new')
