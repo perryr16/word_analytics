@@ -102,4 +102,10 @@ def delete_article(request, pk):
   return redirect('article_all')
 
 def article_new(request):
-  return render(request, 'article/new')
+  return render(request, 'articles/new.html')
+
+def article_post(request):
+  title = request.POST['title']
+  content = request.POST['content']
+  Article.objects.create_article(title, content)
+  return redirect('article_all')

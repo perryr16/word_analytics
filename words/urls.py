@@ -13,4 +13,5 @@ urlpatterns = [
   path('article_chart/<int:pk>', views.article_chart, name='article_chart'),
   path('delete_article/<int:pk>', views.delete_article, name='delete_article'),
   path('article/new', views.article_new, name='article_new'),
+  path('article/post', views.article_post, name='article_post'),
 ]
