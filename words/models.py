@@ -28,7 +28,7 @@ class ArticleManager(models.Manager):
       # x = {kv['content'] : kv['count']}
       # ord_dict.append(x)
       ord_dict[kv['content']] = kv['count']
-    res = {'Title': article.title, 'Content': ord_dict}
+    res = {'Title': article.title, 'Content': ord_dict, 'id': article.id}
     return res
     
 

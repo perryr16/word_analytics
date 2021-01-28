@@ -107,5 +107,7 @@ def article_new(request):
 def article_post(request):
   title = request.POST['title']
   content = request.POST['content']
-  Article.objects.create_article(title, content)
-  return redirect('article_all')
+  article = Article.objects.create_article(title, content)
+  art_id = article['id']
+  return redirect('article_show', pk=art_id)
+  # return redirect('article_all)
