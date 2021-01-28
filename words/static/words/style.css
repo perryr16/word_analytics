@@ -1,18 +1,18 @@
 
 .content {
   position:relative;
-  top: 50px;
+  top: 42px;
   /* overflow:hidden; */
   overflow: scroll;
   height: 90vh;
-  background-color: black;
+  background-image: linear-gradient(to bottom, rgb(10, 10, 10) , rgb(9, 61, 20));  
   padding: 20px;
   color:white;
   font-family: 'arial'
 }
 .btn {
-  color:white;
-  background-color: rgb(12, 7, 77);
+  color:rgb(62, 148, 45);
+  background-color: rgb(0, 0, 0);
   text-decoration:none;
   padding: 11px;
   border: 3px;
@@ -23,11 +23,11 @@
   color: black;
 }
 .btn-outline {
-  color:rgb(214, 72, 47);
+  color:rgb(62, 148, 45);
   background: transparent;
   text-decoration:none;
   padding: 11px;
-  border: 2px white solid;
+  border: 2px rgb(62, 148, 45) solid;
   border-radius: 5px;
 }
 .btn-outline:hover {
@@ -47,11 +47,11 @@
 }
 .main_menu {
   font-family:"arial";
-  /* background-color:black; */
+  background-image: linear-gradient(to right, rgb(14, 3, 77) , rgb(212, 235, 176));  
   overflow:hidden;
-  height: 40px;
+  height: 41px;
   width: 200vw;
   position:fixed;
   z-index: +1;
-  background-color:rgb(37, 89, 201);
+  padding-top:1px;
  }
