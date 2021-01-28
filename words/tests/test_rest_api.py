@@ -16,11 +16,11 @@ class ApiRoutesTest(TestCase):
     self.word3 = Word.objects.create(word='word333', length=7)
 
   def test_urls(self):
-    response = self.client.get('/words/')
+    response = self.client.get('/words/db')
     self.assertEqual(response.status_code, 200)
-    response = self.client.get(f'/words/{self.word2.id}')
+    response = self.client.get(f'/words/db/{self.word2.id}')
     self.assertEqual(response.status_code, 200)
-    response = self.client.post('/words/?word=dog')
+    response = self.client.post('/words/db?word=dog')
     self.assertEqual(response.status_code, 200)
     response = self.client.get(reverse('article_index'))
     self.assertEqual(response.status_code, 200)
@@ -33,20 +33,20 @@ class ApiRoutesTest(TestCase):
 
 
   def test_get_word_index(self):
-    res = c.get('/words/')
+    res = c.get('/words/db')
     self.assertEqual(res.data[0]["word"], self.word1.word)
     self.assertEqual(res.data[1]["word"], self.word2.word)
     self.assertEqual(res.data[2]["word"], self.word3.word)
 
   def test_get_word_by_id(self):
-    res = c.get(f'/words/{self.word2.id}')
+    res = c.get(f'/words/db/{self.word2.id}')
     self.assertEqual(res.data["word"], self.word2.word)
 
   def test_post_word(self):
     original_set = Word.objects.filter(word='chicken')
     self.assertEqual(len(original_set), 0)
 
-    req = c.post('/words/?word=chicken')
+    req = c.post('/words/db?word=chicken')
     new_set = Word.objects.filter(word='chicken')
     self.assertEqual(len(new_set), 1)
 
@@ -60,12 +60,11 @@ class ApiRoutesTest(TestCase):
                 data={'title':'Pigs and Dog', 'body':pigs},
                 )
     self.assertEqual(req.data["Title"], "Pigs and Dog")
-    expected = {"pig": 8, "dog": 1}
+    expected = {"pig": 10, "dog": 1}
     self.assertEqual(req.data["Content"], expected)
     req = c.post(reverse('article'), 
                 data={'title':self.title, 'body':self.body},
                 )
-    import pdb; pdb.set_trace()
     # self.assertEqual(1,1)
     #             headers={'Content-Type': 'application.json'},
     #             data=json.dumps(self.body)

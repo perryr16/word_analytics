@@ -3,12 +3,70 @@
 <div class="content">
 
   <p>{{title}}</p>
-  <ul>
-    {% for k, v in content.items %}
-    <li class="white">{{k}} - {{v}}</li>
-    {% endfor %}
-  </ul>
-  
+  <a class='btn-outline left marged' href="{%url 'delete_article' id%}">Delete</a>
+
+<div id="container" style="width: 75%;">
+  <canvas id="population-chart" data-url="{% url 'article_chart' id%}"></canvas>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+
+  $(function () {
+
+    var $populationChart = $("#population-chart");
+    $.ajax({
+      url: $populationChart.data("url"),
+      success: function (data) {
+
+        var ctx = $populationChart[0].getContext("2d");
+
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              label: '',
+              // fontColor:'Red',
+              backgroundColor: 'rgb(253, 243, 209)',
+              borderColor: 'rgb(65, 50, 2)',
+              borderWidth: '2',
+              hoverBackgroundColor: 'Gray',
+              data: data.data,
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              xAxes: [{ 
+                gridLines: { color: "rgba(214, 197, 255, 0.644)" },
+               }],
+              yAxes: [{ 
+                gridLines: { color: "rgba(214, 197, 255, 0.644)" },
+               }],
+            },
+            legend: {
+              position: 'top',
+              labels: {
+                fontColor: 'white',
+              },
+
+            },
+            title: {
+              display: true,
+              text: 'Article Word Count'
+            }
+          }
+        });
+
+      }
+    });
+
+  });
+
+</script>
+
 </div>
 
 {% endblock %}

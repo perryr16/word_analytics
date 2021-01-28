@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
 from words.models import Word, Article, ArticleWord, ArticleManager
@@ -77,12 +77,35 @@ def article_index(request):
 
 def article_show(request, pk):
   article = Article.objects.get(pk=pk)
-  res = Article.objects.article_n_content(article)
-  context = {'title': res['Title'],
-              'content': res['Content']}
+  context = {'id': article.id,
+            'title': article.title,}
   return render(request, 'articles/show.html', context)
 
 def article_all(request):
-  articles = Article.objects.all()
+  articles = Article.objects.all().order_by('title')
   context = {'articles': list(articles.values())}
   return render(request, 'articles/index.html', context)
+
+def article_chart(request, pk):
+  article = Article.objects.get(pk=pk)
+  res = Article.objects.article_n_content(article)
+  words = list(res['Content'].keys())[:10]
+  count = list(res['Content'].values())[:10]
+  count.append(0)
+  return JsonResponse(data={
+    'labels': words,
+    'data': count
+  })
+
+def delete_article(request, pk):
+  Article.objects.get(pk=pk).delete()
+  return redirect('article_all')
+
+def article_new(request):
+  return render(request, 'articles/new.html')
+
+def article_post(request):
+  title = request.POST['title']
+  content = request.POST['content']
+  Article.objects.create_article(title, content)
+  return redirect('article_all')

@@ -64,7 +64,7 @@ class ArticleManager(models.Manager):
     return body
 
   def remove_small_words(self, body):
-    small_words = [' a ', ' an ', ' and ', ' are ', ' as ', ' be ', ' by ', ' for ', 'form-data', ' i ', ' in ', ' is ', ' it ', ' of ', ' or ', ' to ', ' the ']
+    small_words = [' a ', ' an ', ' and ', ' are ', ' as ', ' be ', ' by ', ' for ', 'form-data', ' from ', ' i ', ' in ', ' is ', ' it ', ' of ', ' or ', ' on ', ' to ', ' that ', ' the ',  ' this ', ' with ', ' was ']
     for small in small_words:
       body = body.replace(small, ' ')
     return body
@@ -75,7 +75,8 @@ class ArticleManager(models.Manager):
         word_list.remove(word)
     while('' in word_list):
       word_list.remove('')
-    return word_list[1:]
+    return word_list
+    # return word_list[1:]
 
   def serialize_article(self, article):
     res = {}
