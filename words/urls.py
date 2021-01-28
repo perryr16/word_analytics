@@ -8,10 +8,10 @@ urlpatterns = [
   path('db/article', views.article, name='article'),
   path('db/articles', views.article_index, name='article_index'),
   path('db/article/<int:pk>', views.article_get, name='article_get'),
-  path('artsy/<int:pk>', views.article_show, name='article_show'),
-  path('artsy', views.article_all, name='article_all'),
+  path('articles/<int:pk>', views.article_show, name='article_show'),
+  path('articles', views.article_all, name='article_all'),
   path('article_chart/<int:pk>', views.article_chart, name='article_chart'),
-  path('delete_article/<int:pk>', views.delete_article, name='delete_article'),
+  path('article/<int:pk>/delete', views.delete_article, name='delete_article'),
   path('article/new', views.article_new, name='article_new'),
   path('article/post', views.article_post, name='article_post'),
 ]
