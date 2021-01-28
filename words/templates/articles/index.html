@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% block page_content %}
 <div class="content">
-  <a class='btn-outline left marged' href="{%url 'article_new'%}">New Article</a><br><br><br><br>
-  {% for a in articles %}
+  <h1>Articles</h1>
+  <ul>
+    {% for a in articles %}
+    <li><a class='btn-outline' href="/words/articles/{{a.id}}">{{a.title}}</a></li><br><br>
+    {% endfor %}
+  </ul>
 
-  <a class='btn-outline' href="/words/articles/{{a.id}}">{{a.title}}</a>
-  {% endfor %}
+  
 
 </div>
 

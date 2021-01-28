@@ -28,8 +28,16 @@
             labels: data.labels,
             datasets: [{
               label: 'Word Count',
-              backgroundColor: 'White',
+              backgroundColor: 'rgb(253, 243, 209)',
+              borderColor: 'rgb(65, 50, 2)',
+              borderWidth: '2',
+              hoverBackgroundColor: 'Gray',
               data: data.data,
+              yAxes: [{
+                gridLines: {
+                  color: 'white'
+                }
+              }]
             }]
           },
           options: {

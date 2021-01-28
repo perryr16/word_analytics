@@ -82,7 +82,7 @@ def article_show(request, pk):
   return render(request, 'articles/show.html', context)
 
 def article_all(request):
-  articles = Article.objects.all()
+  articles = Article.objects.all().order_by('title')
   context = {'articles': list(articles.values())}
   return render(request, 'articles/index.html', context)
 
