@@ -1,20 +1,21 @@
 .all{
   background-color:black;
+  height: 110vh;
 }
 .content {
   position:relative;
   top: 42px;
   /* overflow:hidden; */
   overflow: scroll;
-  height: 11gs0vh;
+  height: 110vh;
   background-image: linear-gradient(to bottom, rgb(10, 10, 10) , rgb(9, 61, 20));  
   padding: 20px;
   color:white;
   font-family: 'arial'
 }
 .btn {
-  color:rgb(62, 148, 45);
-  background-color: rgb(0, 0, 0);
+  color:rgb(33, 46, 31);
+  background-color: rgb(102, 101, 101);
   text-decoration:none;
   padding: 11px;
   border: 3px;
@@ -49,11 +50,12 @@
 }
 .main_menu {
   font-family:"arial";
-  background-image: linear-gradient(to right, rgb(14, 3, 77) , rgb(212, 235, 176));  
+  background-color: black;  
   overflow:hidden;
   height: 41px;
   width: 200vw;
   position:fixed;
   z-index: +1;
   padding-top:1px;
+  border-bottom: 1px gray solid;
  }
