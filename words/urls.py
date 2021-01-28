@@ -10,5 +10,6 @@ urlpatterns = [
   path('article/<int:pk>', views.article_get, name='article_get'),
   path('artsy/<int:pk>', views.article_show, name='article_show'),
   path('artsy', views.article_all, name='article_all'),
-  path('article_chart/<int:pk>', views.article_chart, name='article_chart')
+  path('article_chart/<int:pk>', views.article_chart, name='article_chart'),
+  path('delete_article/<int:pk>', views.delete_article, name='delete_article'),
 ]

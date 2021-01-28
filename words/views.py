@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
@@ -96,4 +96,8 @@ def article_chart(request, pk):
     'labels': words,
     'data': count
   })
+
+def delete_article(request, pk):
+  Article.objects.get(pk=pk).delete()
+  return redirect('article_all')
 

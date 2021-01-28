@@ -3,11 +3,7 @@
 <div class="content">
 
   <p>{{title}}</p>
-  <!-- <ul>
-    {% for k, v in content.items %}
-    <li class="white">{{k}} - {{v}}</li>
-    {% endfor %}
-  </ul> -->
+  <a class='btn-outline left marged' href="{%url 'delete_article' id%}">Delete</a>
 
 <div id="container" style="width: 75%;">
   <canvas id="population-chart" data-url="{% url 'article_chart' id%}"></canvas>
