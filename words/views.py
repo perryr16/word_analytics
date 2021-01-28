@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
 from words.models import Word, Article, ArticleWord, ArticleManager
@@ -78,11 +78,21 @@ def article_index(request):
 def article_show(request, pk):
   article = Article.objects.get(pk=pk)
   res = Article.objects.article_n_content(article)
+  words = list(res['Content'].keys())[:3]
+  count = list(res['Content'].values())[:3]
+  # count.append(0)
+  # count.append(count[0]+1)
   context = {'title': res['Title'],
-              'content': res['Content']}
+              'content': res['Content'],
+              'words': words,
+              'count': count,}
   return render(request, 'articles/show.html', context)
 
 def article_all(request):
   articles = Article.objects.all()
   context = {'articles': list(articles.values())}
-  return render(request, 'articles/index.html', context)
+  return render(request, 'articles/index.html')
+
+def article_dat(request, pk):
+  return JsonResponse()
+
