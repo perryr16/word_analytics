@@ -75,7 +75,8 @@ class ArticleManager(models.Manager):
         word_list.remove(word)
     while('' in word_list):
       word_list.remove('')
-    return word_list[1:]
+    return word_list
+    # return word_list[1:]
 
   def serialize_article(self, article):
     res = {}
