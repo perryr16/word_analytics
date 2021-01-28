@@ -1,10 +1,12 @@
-
+.all{
+  background-color:black;
+}
 .content {
   position:relative;
   top: 42px;
   /* overflow:hidden; */
   overflow: scroll;
-  height: 90vh;
+  height: 11gs0vh;
   background-image: linear-gradient(to bottom, rgb(10, 10, 10) , rgb(9, 61, 20));  
   padding: 20px;
   color:white;
