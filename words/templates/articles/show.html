@@ -10,7 +10,7 @@
   </ul> -->
 
 <div id="container" style="width: 75%;">
-  <canvas id="population-chart"></canvas>
+  <canvas id="population-chart" data-url="{% url 'article_chart' id%}"></canvas>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -29,11 +29,11 @@
         new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: "{{words}}",
+            labels: data.labels,
             datasets: [{
               label: 'Word Count',
               backgroundColor: 'White',
-              data: "{{count}}",
+              data: data.data,
             }]
           },
           options: {

@@ -77,22 +77,23 @@ def article_index(request):
 
 def article_show(request, pk):
   article = Article.objects.get(pk=pk)
-  res = Article.objects.article_n_content(article)
-  words = list(res['Content'].keys())[:3]
-  count = list(res['Content'].values())[:3]
-  # count.append(0)
-  # count.append(count[0]+1)
-  context = {'title': res['Title'],
-              'content': res['Content'],
-              'words': words,
-              'count': count,}
+  context = {'id': article.id,
+            'title': article.title,}
   return render(request, 'articles/show.html', context)
 
 def article_all(request):
   articles = Article.objects.all()
   context = {'articles': list(articles.values())}
-  return render(request, 'articles/index.html')
+  return render(request, 'articles/index.html', context)
 
-def article_dat(request, pk):
-  return JsonResponse()
+def article_chart(request, pk):
+  article = Article.objects.get(pk=pk)
+  res = Article.objects.article_n_content(article)
+  words = list(res['Content'].keys())[:10]
+  count = list(res['Content'].values())[:10]
+  count.append(0)
+  return JsonResponse(data={
+    'labels': words,
+    'data': count
+  })
 
