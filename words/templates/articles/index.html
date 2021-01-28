@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block page_content %}
+<div class="content">
+  {% for a in articles %}
+  <a class='btn-outline' href="/words/artsy/{{a.id}}">{{a.title}}</a>
+  {% endfor %}
+
+</div>
+
+{% endblock %}

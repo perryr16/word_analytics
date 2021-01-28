@@ -1,7 +1,57 @@
-p {
-  color: green;
-}
 
 .content {
-  background-color:yellow
+  position:relative;
+  top: 50px;
+  /* overflow:hidden; */
+  overflow: scroll;
+  height: 90vh;
+  background-color: black;
+  padding: 20px;
+  color:white;
+  font-family: 'arial'
 }
+.btn {
+  color:white;
+  background-color: rgb(12, 7, 77);
+  text-decoration:none;
+  padding: 11px;
+  border: 3px;
+  border-radius: 5px;
+}
+.btn:hover {
+  background-color:teal;
+  color: black;
+}
+.btn-outline {
+  color:rgb(214, 72, 47);
+  background: transparent;
+  text-decoration:none;
+  padding: 11px;
+  border: 2px white solid;
+  border-radius: 5px;
+}
+.btn-outline:hover {
+  color:teal;
+  background: transparent;
+  text-decoration:none;
+  padding: 11px;
+  border: 2px teal solid;
+  border-radius: 5px;
+}
+.left {
+  float: left;
+  margin-left: 5px;
+}
+.marged {
+  margin-right: 20px;
+}
+.main_menu {
+  font-family:"arial";
+  /* background-color:black; */
+  overflow:hidden;
+  height: 40px;
+  width: 200vw;
+  position:fixed;
+  z-index: +1;
+  background-color:rgb(37, 89, 201);
+ }

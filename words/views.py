@@ -81,3 +81,8 @@ def article_show(request, pk):
   context = {'title': res['Title'],
               'content': res['Content']}
   return render(request, 'articles/show.html', context)
+
+def article_all(request):
+  articles = Article.objects.all()
+  context = {'articles': list(articles.values())}
+  return render(request, 'articles/index.html', context)
