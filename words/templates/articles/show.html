@@ -27,23 +27,31 @@
           data: {
             labels: data.labels,
             datasets: [{
-              label: 'Word Count',
+              label: '',
+              // fontColor:'Red',
               backgroundColor: 'rgb(253, 243, 209)',
               borderColor: 'rgb(65, 50, 2)',
               borderWidth: '2',
               hoverBackgroundColor: 'Gray',
               data: data.data,
-              yAxes: [{
-                gridLines: {
-                  color: 'white'
-                }
-              }]
             }]
           },
           options: {
             responsive: true,
+            scales: {
+              xAxes: [{ 
+                gridLines: { color: "rgba(214, 197, 255, 0.644)" },
+               }],
+              yAxes: [{ 
+                gridLines: { color: "rgba(214, 197, 255, 0.644)" },
+               }],
+            },
             legend: {
               position: 'top',
+              labels: {
+                fontColor: 'white',
+              },
+
             },
             title: {
               display: true,
