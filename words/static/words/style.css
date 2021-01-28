@@ -1,5 +1,5 @@
 .all{
-  background-color:rgba(214, 197, 255, 0.644);
+  background-color:black;
   height: 110vh;
 }
 .content {
@@ -15,15 +15,15 @@
 }
 .btn {
   color:rgb(0, 0, 0);
-  background-color: rgb(247, 242, 242);
+  background-color: rgb(235, 235, 235);
   text-decoration:none;
-  /* padding: 11px; */
-  border: 3px;
+  padding: 11px;
+  border: 3px rgb(2, 66, 2) solid;
   border-radius: 5px;
 }
 .btn:hover {
-  background-color:teal;
-  color: black;
+  background-color:rgb(10, 46, 46);
+  color: white;
 }
 .btn-outline {
   color:rgb(62, 148, 45);
@@ -34,29 +34,29 @@
   border-radius: 5px;
 }
 .btn-outline:hover {
-  color:teal;
+  color:white;
   background: transparent;
   text-decoration:none;
   padding: 11px;
-  border: 2px teal solid;
+  border: 2px white solid;
   border-radius: 5px;
 }
 .left {
   float: left;
-  margin-left: 5px;
+  /* margin-left: 5px; */
 }
 .marged {
-  margin-right: 20px;
+  /* margin-right: 20px; */
 }
 .main_menu {
   font-family:"arial";
   background-color: black;  
   overflow:hidden;
-  height: 43px;
+  height: 50px;
   width: 200vw;
   position:fixed;
-  right: 10px;
   z-index: +1;
   padding-top:1px;
   border-bottom: 1px gray solid;
+  padding-left:5px;
  }
