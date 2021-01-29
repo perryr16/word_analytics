@@ -1,13 +1,11 @@
 import json
 from words.serializers import *
 from rest_framework.response import Response
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
 from ..models import *
 from words.serializers import *
-import json 
 
 
 @api_view(['GET', 'POST'])
@@ -24,10 +22,6 @@ def word_index(request):
   return Response(serializer.data)
 
 
-
-
-
-
 @api_view(['GET'])
 def word_show(request, pk):
   try: 
@@ -38,5 +32,3 @@ def word_show(request, pk):
   if request.method == 'GET':
     serializer = WordSerializer(word)
     return Response(serializer.data)
-
-from django.shortcuts import render, redirect

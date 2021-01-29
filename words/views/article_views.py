@@ -35,11 +35,6 @@ def article_index(request):
   return Response(serializer.data)
 
 
-# REQUEST METHODS
-# request.method
-# request.query_params['input_param']
-# request.headers
-
 def article_show(request, pk):
   article = Article.objects.get(pk=pk)
   context = {'id': article.id,
@@ -81,3 +76,9 @@ def article_post(request):
   art_id = article['id']
   return redirect('article_show', pk=art_id)
   # return redirect('article_all)
+
+
+# REQUEST METHODS
+# request.method
+# request.query_params['input_param']
+# request.headers
