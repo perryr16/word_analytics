@@ -75,7 +75,6 @@ def article_post(request):
   article = Article.objects.create_article(title, content)
   art_id = article['id']
   return redirect('article_show', pk=art_id)
-  # return redirect('article_all)
 
 
 # REQUEST METHODS
