@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from ..models import *
 from words.serializers import *
+from ..managers import *
 import json
 
 
