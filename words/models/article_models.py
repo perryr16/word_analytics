@@ -1,7 +1,6 @@
 from django.db import models
 from .word_models import Word
 
-
 class ArticleManager(models.Manager):
   def create_article(self, title, body):
     article = self.create(title=title)
