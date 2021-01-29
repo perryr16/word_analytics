@@ -3,8 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from ..models import *
-from words.serializers import *
-from ..managers import *
+from ..serializers import *
 import json
 
 
