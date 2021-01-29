@@ -1,33 +1,20 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.response import Response 
-from words.models import Word, Article, ArticleWord, ArticleManager
-from words.serializers import WordSerializer, ArticleSerializer, ArticleWordSerializer
-import json 
-
-
-@api_view(['GET', 'POST'])
-def word_index(request):
-  if request.method == 'GET':
-    words = Word.objects.all()
-    serializer = WordSerializer(words, many=True)
-  if request.method == 'POST':
-    param = request.query_params['word']
-    new_word = Word(word=param, length=len(param))
-    new_word.save()
-    words = Word.objects.all()
-    serializer = WordSerializer(words, many=True)
-  return Response(serializer.data)
+from rest_framework.response import Response
+from ..models import *
+from ..serializers import *
+import json
 
 
 @api_view(['POST'])
 def article(request):
-  if request.method=='POST':
+  if request.method == 'POST':
     body = request.data['body']
     title = request.data['title']
     res = Article.objects.create_article(title, body)
   return Response(res)
+
 
 @api_view(['GET'])
 def article_get(request, pk):
@@ -40,28 +27,6 @@ def article_get(request, pk):
     # return Response(article.objects.values())
     return Response(Article.objects.article_n_content(article))
 
-  # title = request.query_params['title']
-  # article = Article.objects.create_article(title, request.body)
-  # # article = Article(title=title)
-  # # article.save
-  # # word = Word(word='tuna', length=4)
-  # # word.save()
-  # import pdb; pdb.set_trace()
-  # return Response(json.dumps({"word":"word"}))
-  # return HttpResponse(json.dumps({"words":"word"}))
-  # return HttpResponse(json.dumps(words))
-
-
-@api_view(['GET'])
-def word_show(request, pk):
-  try: 
-    word = Word.objects.get(pk=pk)
-  except Word.DoesNotExist:
-    return HttpResponse(status=404)
-
-  if request.method == 'GET':
-    serializer = WordSerializer(word)
-    return Response(serializer.data)
 
 @api_view(['GET'])
 def article_index(request):
@@ -70,21 +35,18 @@ def article_index(request):
   return Response(serializer.data)
 
 
-# REQUEST METHODS
-# request.method
-# request.query_params['input_param']
-# request.headers
-
 def article_show(request, pk):
   article = Article.objects.get(pk=pk)
   context = {'id': article.id,
-            'title': article.title,}
+             'title': article.title, }
   return render(request, 'articles/show.html', context)
+
 
 def article_all(request):
   articles = Article.objects.all().order_by('title')
   context = {'articles': list(articles.values())}
   return render(request, 'articles/index.html', context)
+
 
 def article_chart(request, pk):
   article = Article.objects.get(pk=pk)
@@ -93,19 +55,29 @@ def article_chart(request, pk):
   count = list(res['Content'].values())[:10]
   count.append(0)
   return JsonResponse(data={
-    'labels': words,
-    'data': count
+      'labels': words,
+      'data': count
   })
+
 
 def delete_article(request, pk):
   Article.objects.get(pk=pk).delete()
   return redirect('article_all')
 
+
 def article_new(request):
   return render(request, 'articles/new.html')
+
 
 def article_post(request):
   title = request.POST['title']
   content = request.POST['content']
-  Article.objects.create_article(title, content)
-  return redirect('article_all')
+  article = Article.objects.create_article(title, content)
+  art_id = article['id']
+  return redirect('article_show', pk=art_id)
+
+
+# REQUEST METHODS
+# request.method
+# request.query_params['input_param']
+# request.headers
