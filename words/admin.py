@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Word, Article, ArticleWord
+from .models import *
 
 # Register your models here.
 
