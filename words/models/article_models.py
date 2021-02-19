@@ -20,6 +20,7 @@ class ArticleManager(models.Manager):
       ord_dict[kv['content']] = kv['count']
     res = {'Title': article.title, 'Content': ord_dict, 'id': article.id}
     return res
+    
 
   def create_words(self, word, word_list):
     try:
