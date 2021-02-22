@@ -49,11 +49,15 @@ change settings.py for DATABASE
 $ createdb project_name_db
 $ createdb project_name_db_test
 ```
-### Initial Database
+### Initial Database Migrations
 ```
 $ pythion manage.py makemigrations #
 > No changes detected 
 $ python manage.py migrate # create default schema
-$ python manage.py createsuperuser
+```
+
+### Running Locally 
+```
 $ python manage.py runserver
 ```
+Navigate to http://localhost:5
