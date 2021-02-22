@@ -6,3 +6,11 @@
  Charts are generated using the chart.js library.
 
  Users can upload article data using the new artifle form.
+
+ # Entering the Python Environment 
+  1. Create the virtual enviornment 
+  - Change directory to root of project
+  - `$ virtualenv word_analytics_env`
+  2. Enter the Environment 
+  - in the root directory 
+  - `$ source 
