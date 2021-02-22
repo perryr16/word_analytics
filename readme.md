@@ -60,4 +60,4 @@ $ python manage.py migrate # create default schema
 ```
 $ python manage.py runserver
 ```
-Navigate to http://localhost:5
+Navigate to http://localhost:8000
